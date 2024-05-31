@@ -5,17 +5,9 @@
       opacity: 0;
       filter: blur(10px); /* 初始状态模糊 */
       pointer-events: none;
-      animation-name: float, fadeInOut;
+      animation-name: fadeInOut;
       animation-timing-function: ease-in-out;
-      animation-iteration-count: 1, 1; /* 浮动动画循环，透明度和模糊动画只执行一次 */
-    }
-    @keyframes float {
-      0% {
-        transform: translate(0, 0);
-      }
-      100% {
-        transform: translate(0, -100rem);
-      }
+      animation-iteration-count: 1; /* 浮动动画循环，透明度和模糊动画只执行一次 */
     }
     @keyframes fadeInOut {
       0% {
