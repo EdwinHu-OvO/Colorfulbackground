@@ -1,0 +1,132 @@
+
+<head>
+  <title>动态彩色泡泡页面</title>
+  <style>
+    body {
+      background: none;
+      /*margin: 0;*/
+    }
+  
+    .bubble {
+      position: absolute; /* 保持绝对定位 */
+      border-radius: 50%;
+      opacity: 0;
+      filter: blur(10px); /* 初始状态模糊 */
+      pointer-events: none;
+      /*animation-name: fadeInOut;*/
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: 1,1; /* 浮动动画循环两次，透明度和模糊动画只执行一次 */
+      z-index: -1;
+    }
+  
+  
+    @keyframes fadeInOut {
+      0% {
+        opacity: 0;
+        filter: blur(10px);
+      }
+      20% {
+        opacity: 0.8;
+        filter: blur(0px);
+      }
+      80% {
+        opacity: 0.8;
+        filter: blur(0px);
+      }
+      100% {
+        opacity: 0;
+        filter: blur(10px);
+      }
+    }
+  </style>
+  
+  <script>
+    function createBubble() {
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      
+      const x = Math.random() * document.documentElement.scrollWidth * 0.8-100;
+      const y = Math.random() * document.documentElement.scrollHeight * 0.8-100; // 使用整个文档的高度
+      const size = Math.random() * 310 + 150;
+      const color = getRandomColor();
+      
+      bubble.style.left = x + 'px';
+      bubble.style.top = y + 'px';
+      bubble.style.width = size + 'px';
+      bubble.style.height = size + 'px';
+      bubble.style.backgroundColor = color;
+      
+      // 创建一个随机的动画
+    const animationName = 'float' + Math.random();
+    const x1 = Math.floor(Math.random() * 100) - 50; // 随机生成-50到50之间的数
+    const y1 = Math.floor(Math.random() * 100) - 50; // 随机生成-50到50之间的数
+    const x2 = Math.floor(Math.random() * 100) - 50; // 随机生成-50到50之间的数
+    const y2 = Math.floor(Math.random() * 100) - 50; // 随机生成-50到50之间的数
+
+    let style = document.createElement('style');
+    style.innerHTML = `
+    @keyframes ${animationName} {
+      0% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(${x1}px, ${y1}px);
+      }
+      100% {
+        transform: translate(${x2}px, ${y2}px);
+      }
+    }
+
+    @keyframes fadeInOut {
+      0% {
+        opacity: 0;
+      }
+      25% {
+        opacity: 1;
+      }
+      75% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }`;
+      document.head.appendChild(style);
+      document.body.appendChild(bubble);
+
+      const animationDuration = Math.random() * 1 + 5; // 随机生成动画持续时间
+      // 将动画应用到泡泡上
+      bubble.style.animation = `${animationName} ${animationDuration}s linear infinite, fadeInOut ${animationDuration + 1.5}s`;
+      
+      //bubble.style.animationDuration = animationDuration + 's, ' + (animationDuration + 1.5) + 's'; // 配合浮动动画的时间，透明度和模糊动画稍长一点
+      
+      bubble.addEventListener('animationend', () => {
+        bubble.remove(); // 动画结束时移除泡泡
+      });
+    }
+    function getBackgroundColor(light) {
+      let color = 'hsl(';
+      let color_h = Math.floor(Math.random() * 250);
+      let color_s = Math.floor(Math.random() * 10) + 35 + '%'; // 饱和度
+      let color_l = Math.floor(Math.random() * (100-light)) + light + '%'; // 亮度50%-90%
+      return bgColor = color + color_h + ', ' + color_s + ', ' + color_l + ')';
+    }
+  
+    function setBackgroundColor() {
+      let bgColor_1 = 'linear-gradient(45deg, ' + getBackgroundColor(75) + ' 0%,' + getBackgroundColor(40) + ' 100%)';
+      document.body.style.background = bgColor_1;
+    }
+  
+    window.onload = setBackgroundColor;
+  
+    function getRandomColor() {
+      let color = 'hsl(';
+      let color_h = Math.floor(Math.random() * 360);
+      let color_s = Math.floor(Math.random() * 41) + 45 + '%'; // 饱和度
+      let color_l = Math.floor(Math.random() * 31) + 60 + '%'; // 亮度50%-90%
+      return color + color_h + ', ' + color_s + ', ' + color_l + ')';
+    }
+  
+    setInterval(createBubble, 800);
+  </script>
+  
