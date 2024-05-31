@@ -7,31 +7,24 @@
       pointer-events: none;
       animation-name: float, fadeInOut;
       animation-timing-function: ease-in-out;
-      animation-iteration-count: infinite, 1; /* 浮动动画循环两次，透明度和模糊动画只执行一次 */
+      animation-iteration-count: 1, 1; /* 浮动动画循环，透明度和模糊动画只执行一次 */
     }
-  
     @keyframes float {
       0% {
         transform: translate(0, 0);
       }
-      50% {
-        transform: translate(300px, -200px);
-      }
       100% {
-        transform: translate(0, 0);
+        transform: translate(0, -100rem);
       }
     }
-  
     @keyframes fadeInOut {
       0% {
         opacity: 0;
         filter: blur(10px);
-        transform: translate(0, 0);
       }
-      20% {
+      10% {
         opacity: 0.8;
         filter: blur(0px);
-        transform: translate(0, -10rem);
       }
       80% {
         opacity: 0.8;
@@ -44,12 +37,9 @@
     }
   </style>
     <div id="bubble-container"></div>
-  
     <canvas id="granim-canvas"></canvas>
-
     <!-- Call the script -->
     <script src="granim.min.js"></script>
-    
     <!-- Create a Granim instance -->
     <style>
       body {
@@ -70,22 +60,20 @@
          left: 0;
          width: 100%;
          height: 100%;
-    }
-      </style>
-  <script>
-    
+      }
+    </style>
+<script>
     const bubbleContainer = document.getElementById('bubble-container');
-
 function createBubble() {
   const bubble = document.createElement('div');
   bubble.className = 'bubble';
-  
-  const x = Math.random() * (window.innerWidth);
-  const y = Math.random() * (window.innerHeight);
+
+  const x = Math.random() * (window.innerWidth)*1.2-50;
+  const y = Math.random() * (window.innerHeight)*0.6 +(window.innerHeight)*0.4;
   //const size = Math.random() * 310 + 150;
   const size = Math.random() *13 + 13;
   const color = getRandomColor();
-  
+
   bubble.style.left = x + 'px';
   bubble.style.top = y + 'px';
   //bubble.style.width = size + 'px';
@@ -96,7 +84,7 @@ function createBubble() {
   
   bubbleContainer.appendChild(bubble);
   
-  const animationDuration = Math.random() * 3 + 4;// 随机生成动画持续时间
+  const animationDuration = Math.random() * 4 + 7;// 随机生成动画持续时间
   
   bubble.style.animationDuration = animationDuration + 's, ' + (animationDuration + 1.5) + 's';// 配合浮动动画的时间，透明度和模糊动画稍长一点
   
@@ -119,16 +107,16 @@ resizeBubbleContainer();
 
 // 创建泡泡
 setInterval(createBubble, 500);
-    function getBackgroundColor(light,angle,dangle) {
-      let color = 'hsl(';
-      let color_h = Math.floor(Math.random() * angle)+dangle;
-      let color_s = Math.floor(Math.random() * 10) + 35 + '%'; // 饱和度
-      let color_l = light + '%'; // 亮度50%-90%
-      return bgColor = color + color_h + ', ' + color_s + ', ' + color_l + ')';
-    }
+function getBackgroundColor(light,angle,dangle) {
+   let color = 'hsl(';
+   let color_h = Math.floor(Math.random() * angle)+dangle;
+   let color_s = Math.floor(Math.random() * 10) + 35 + '%'; // 饱和度
+   let color_l = light + '%'; // 亮度50%-90%
+   return bgColor = color + color_h + ', ' + color_s + ', ' + color_l + ')';
+}
     
-    let bgColor_1 = getBackgroundColor(75,180,0); 
-    let bgColor_2 = getBackgroundColor(80,180,180);
+let bgColor_1 = getBackgroundColor(75,180,0); 
+let bgColor_2 = getBackgroundColor(80,180,180);
     var granimInstance = new Granim({
        element: '#granim-canvas',
        name: 'granim',
